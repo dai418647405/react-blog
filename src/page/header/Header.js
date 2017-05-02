@@ -5,15 +5,16 @@ import { Link } from 'react-router';
 const { SubMenu } = Menu;
 const LayoutHeader = Layout.Header;
 const menus = [
-    {name: '首页', path: 'home', icon: 'mail'},
-    {name: '品牌管理', path: 'brands', icon: 'mail'},
-    {name: '特色标签', path: 'tags', icon: 'appstore'},
-    {name: '点评摘要', path: 'summaries', icon: 'setting'},
-    {name: '点评头条', path: 'articles', icon: 'setting'},
-    {name: '舆情分析', path: 'opinions', icon: 'setting'},
-    {name: '媒体影视', path: 'medias', icon: 'appstore'},
-    {name: '明星艺人', path: 'stars', icon: 'mail'}
+    {name: 'Home', path: 'home', icon: 'appstore'},
+    {name: 'RemoteAPI', path: 'joke', icon: 'appstore'},
+    {name: 'Stack', path: 'path1', icon: 'appstore'},
+    {name: 'Stack', path: 'path2', icon: 'appstore'},
+    {name: 'Stack', path: 'path3', icon: 'appstore'},
+    {name: 'Stack', path: 'path4', icon: 'appstore'},
+    {name: 'Stack', path: 'path5', icon: 'appstore'},
+    {name: 'Stack', path: 'path6', icon: 'appstore'}
 ];
+
 
 class Header extends Component {
     constructor(props) {

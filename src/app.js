@@ -4,17 +4,17 @@ import { Router, Route, browserHistory, hashHistory, IndexRoute } from 'react-ro
 import Master from './page/Master';
 import Home from './page/home/Home';
 import Article from './page/content/Article';
+import InfoList from './page/content/InfoList';
+import Editor from './page/content/Editor';
 
 ReactDOM.render((
     <Router history={hashHistory}>
         <Route path="/" component={Master}>
             <Route path="/home" component={Home}>
                 <Route path="/home/blog/:articleId" component={Article}/>
+                <Route path="/home/editor" component={Editor}/>
             </Route>
-            {/*/!*<Route path="/repos" component={Repos}>*!/*/}
-        {/*/!*<Route path="/repos/:userName/:repoName" component={Repo}/>*!/*/}
-    {/*/!*</Route>*!/*/}
-        {/*/!*<Route path="/about" component={About}/>*!/*/}
+            <Route path="/joke" component={InfoList}/>
         </Route>
     </Router>
 ), document.getElementById('container'));

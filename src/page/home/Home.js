@@ -7,14 +7,14 @@ const { Content, Sider } = Layout;
 const menu1 = {
     menuInfo:{title:'Java', icon:'user'},
     menuItems:[
-        {name: '首页', path: '/home/blog/1'},
-        {name: '品牌管理', path: '/home/blog/2'},
-        {name: '特色标签', path: 'tags' },
-        {name: '点评摘要', path: 'summaries'},
-        {name: '点评头条', path: 'articles'},
-        {name: '舆情分析', path: 'opinions'},
-        {name: '媒体影视', path: 'medias'},
-        {name: '明星艺人', path: 'stars'}
+        {name: 'java_1', path: '/home/blog/1'},
+        {name: 'java_2', path: '/home/blog/2'},
+        {name: 'java_3', path: 'home1' },
+        {name: 'java_4', path: 'home2'},
+        {name: 'java_5', path: 'home3'},
+        {name: 'java_6', path: 'home4'},
+        {name: 'java_7', path: 'home5'},
+        {name: 'java_8', path: 'home6'}
     ]
 };
 
@@ -45,7 +45,7 @@ class Home extends Component {
                             style={{ height: '100%' }}
                         >
                             <SubMenu key="sub1" title={<span><Icon type="user" />subnav 1</span>}>
-                                <Menu.Item key="1">option1</Menu.Item>
+                                <Menu.Item key="1"><Link to='/home/editor'>option1</Link></Menu.Item>
                                 <Menu.Item key="2">option2</Menu.Item>
                                 <Menu.Item key="3">option3</Menu.Item>
                                 <Menu.Item key="4">option4</Menu.Item>
