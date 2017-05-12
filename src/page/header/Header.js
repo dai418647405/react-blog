@@ -9,7 +9,7 @@ const menus = [
     {name: 'RemoteAPI', path: 'joke', icon: 'appstore'},
     {name: 'PostList', path: 'post', icon: 'appstore'},
     {name: 'PostListDemo', path: 'post/demo', icon: 'appstore'},
-    {name: 'Stack', path: 'path3', icon: 'appstore'},
+    {name: 'PaginationDemo', path: 'page/demo', icon: 'appstore'},
     {name: 'Stack', path: 'path4', icon: 'appstore'},
     {name: 'Stack', path: 'path5', icon: 'appstore'},
     {name: 'Stack', path: 'path6', icon: 'appstore'}

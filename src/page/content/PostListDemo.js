@@ -2,34 +2,30 @@ import { Table, Button } from 'antd';
 import React, {Component, PropTypes} from 'react';
 import { Tabs, Switch} from 'antd';
 import './css/postlist.css';
+import {Hex} from 'react-hui';
 
 const TabPane = Tabs.TabPane;
 
 const data = [{
-    key: '15',
+    key: '11',
     name: 'John Brown',
     age: 32,
     address: 'New York No. 1 Lake Park',
 }, {
-    key: '25',
-    name: 'Jim Green',
+    key: '22',
+    name: 'Joe Black',
     age: 42,
     address: 'London No. 1 Lake Park',
 }, {
-    key: '35',
-    name: 'Joe Black',
-    age: 33,
+    key: '33',
+    name: 'Jim Green',
+    age: 32,
     address: 'Sidney No. 1 Lake Park',
 }, {
-    key: '45',
+    key: '44',
     name: 'Jim Red',
-    age: 34,
+    age: 32,
     address: 'London No. 2 Lake Park',
-}, {
-    key: '55',
-    name: 'Joe Black',
-    age: 36,
-    address: 'Sidney No. 1 Lake Park',
 }];
 
 const columns = [{
@@ -68,24 +64,28 @@ class PostListDemo extends Component {
             curTopicSectionId : 1,
             curSortType : 1,
             data: [],
-            pagination: {},
+            pagination: {
+                current : 1,
+                pageSize : 20,
+                total:200
+            },
             loading: false,
         };
     }
 
-    handleChange(pagination, filters, sorter) {
-        const pager = this.state.pagination;
-        pager.current = pagination.current;
-        this.setState({
-            pagination: pager,
-        });
-        this.fetch({
-            results: pagination.pageSize,
-            page: pagination.current,
-            sortField: sorter.field,
-            sortOrder: sorter.order,
-            filters
-        });
+    componentDidMount() {
+        console.log('componentDidMount');
+        this.loadPostList(this.state.curTopicSectionId, this.state.curSortType, this.state.pagination);
+    }
+
+    handlePageChange(pagination) {
+        console.log('handlePageChange start, pagination=' + pagination);
+        const pager = pagination;
+        // this.setState({
+        //     pagination: pager,
+        // });
+        this.loadPostList(this.state.curTopicSectionId, this.state.curSortType, pager);
+        console.log('handlePageChange end');
     };
 
     fetch(params = {}) {
@@ -109,41 +109,65 @@ class PostListDemo extends Component {
         this.setState({
             loading: false,
             data: data,
-            pagination
+            pagination : pagination
         });
     };
 
-    componentDidMount() {
-        this.fetch();
+    handleTabChange(activeKey, type) {
+        console.log('handleTabChange start: activeKey=' + activeKey + '&type=' + type);
+        let curTopicSectionId = this.state.curTopicSectionId;
+        let curSortType = this.state.curSortType;
+        if (type == 1) {
+            this.setState({curTopicSectionId : activeKey});
+            curTopicSectionId = activeKey;
+        }
+        if (type == 2) {
+            this.setState({curSortType : activeKey});
+            curSortType = activeKey;
+        }
+        this.loadPostList(curTopicSectionId, curSortType, this.state.pagination);
+        console.log('handleTabChange end');
     }
 
-    handleTabChange(activeKey) {
-        console.log('blanksssss' + activeKey);
+    loadPostList(curTopicSectionId, curSortType, pager) {
+        console.log('loadPostList start: curTopicSectionId=' + curTopicSectionId + '&curSortType=' + curSortType + '&pager=' + pager);
+        this.setState({ loading: true });
+        const url = '/api/latest/joke/img?page=';
+        const params = {
+            sectionId : curTopicSectionId,
+            sortType : curSortType,
+            pager: pager
+        };
+        // Hex.get(url, params ,data => {
+        //     console.log('result =' + data);
+        //     this.setState({data : data.data.postList, pagination : data.data.pager, loading: false});
+        // });
+        this.setState({data : data, pagination : pager, loading: false});
     }
 
     render() {
         return (
         <div className="card-container">
-            <Tabs type="card" defaultActiveKey="1" onChange={this.handleTabChange.bind(this)}>
-                <TabPane tab="Tab a" key="1" >
-                </TabPane>
-                <TabPane tab="Tab b" key="2" />
-                <TabPane tab="Tab c" key="3" />
+            <Tabs type="card" defaultActiveKey="1" onChange={(activeKey) => this.handleTabChange(activeKey, 1)}>
+                <TabPane tab="话题类型 a" key="1" />
+                <TabPane tab="话题类型 b" key="2" />
+                <TabPane tab="话题类型 c" key="3" />
             </Tabs>
-            <Tabs defaultActiveKey="11" className="sort_card_bar">
-                <TabPane tab="Tab 1" key="11" />
-                <TabPane tab="Tab 2" key="22" />
-                <TabPane tab="Tab 3" key="33" />
+            <Tabs defaultActiveKey="101" className="sort_card_bar" onChange={(activeKey) => this.handleTabChange(activeKey, 2)}>
+                <TabPane tab="排序方式 1" key="101" />
+                <TabPane tab="排序方式 2" key="102" />
+                <TabPane tab="排序方式 3" key="103" />
             </Tabs>
             <div style={{background: 'white'}}>
                 <Table columns={columns}
-                       rowKey={record => record.registered}
-                       dataSource={this.state.data}
+                       rowKey={record => record.key}
+                       dataSource={data}
                        pagination={this.state.pagination}
                        loading={this.state.loading}
-                       onChange={this.handleChange.bind(this)}
+                       onChange={this.handlePageChange.bind(this)}
                 />
             </div>
+            {console.log('render pagination:' + this.state.pagination)}
         </div>
         );
     }
