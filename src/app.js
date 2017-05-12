@@ -6,6 +6,8 @@ import Home from './page/home/Home';
 import Article from './page/content/Article';
 import InfoList from './page/content/InfoList';
 import Editor from './page/content/Editor';
+import PostListDemo from './page/content/PostListDemo';
+import PostList from './page/content/PostList';
 
 ReactDOM.render((
     <Router history={hashHistory}>
@@ -15,6 +17,8 @@ ReactDOM.render((
                 <Route path="/home/editor" component={Editor}/>
             </Route>
             <Route path="/joke" component={InfoList}/>
+            <Route path='/post' component={PostList}/>
+            <Route path='/post/demo' component={PostListDemo}/>
         </Route>
     </Router>
 ), document.getElementById('container'));

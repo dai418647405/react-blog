@@ -7,8 +7,8 @@ const LayoutHeader = Layout.Header;
 const menus = [
     {name: 'Home', path: 'home', icon: 'appstore'},
     {name: 'RemoteAPI', path: 'joke', icon: 'appstore'},
-    {name: 'Stack', path: 'path1', icon: 'appstore'},
-    {name: 'Stack', path: 'path2', icon: 'appstore'},
+    {name: 'PostList', path: 'post', icon: 'appstore'},
+    {name: 'PostListDemo', path: 'post/demo', icon: 'appstore'},
     {name: 'Stack', path: 'path3', icon: 'appstore'},
     {name: 'Stack', path: 'path4', icon: 'appstore'},
     {name: 'Stack', path: 'path5', icon: 'appstore'},
