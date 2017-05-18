@@ -6,7 +6,6 @@ import Home from './page/home/Home';
 import Article from './page/content/Article';
 import InfoList from './page/content/InfoList';
 import Editor from './page/content/Editor';
-import PostListDemo from './page/content/PostListDemo';
 import PostList from './page/content/PostList';
 import PaginationDemo from './page/content/PaginationDemo';
 
@@ -19,7 +18,6 @@ ReactDOM.render((
             </Route>
             <Route path="/joke" component={InfoList}/>
             <Route path='/post' component={PostList}/>
-            <Route path='/post/demo' component={PostListDemo}/>
             <Route path='/page/demo' component={PaginationDemo}/>
         </Route>
     </Router>

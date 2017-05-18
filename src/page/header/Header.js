@@ -6,14 +6,14 @@ import './css/header.css';
 const { SubMenu } = Menu;
 const LayoutHeader = Layout.Header;
 const menus = [
-    {name: 'Home', path: 'home', icon: 'appstore'},
-    {name: 'RemoteAPI', path: 'joke', icon: 'appstore'},
-    {name: 'PostList', path: 'post', icon: 'appstore'},
-    {name: 'PostListDemo', path: 'post/demo', icon: 'appstore'},
-    {name: 'PaginationDemo', path: 'page/demo', icon: 'appstore'},
-    {name: 'Stack', path: 'path4', icon: 'appstore'},
-    {name: 'Stack', path: 'path5', icon: 'appstore'},
-    {name: 'Stack', path: 'path6', icon: 'appstore'}
+    {name: '技术园', path: 'home', icon: 'appstore'},
+    {name: '虎扑帖区', path: 'post', icon: 'appstore'},
+    {name: '无聊笑话', path: 'joke', icon: 'appstore'}
+    // {name: 'RemoteAPI', path: 'joke', icon: 'appstore'},
+    // {name: 'PaginationDemo', path: 'page/demo', icon: 'appstore'},
+    // {name: 'Stack', path: 'path4', icon: 'appstore'},
+    // {name: 'Stack', path: 'path5', icon: 'appstore'},
+    // {name: 'Stack', path: 'path6', icon: 'appstore'}
 ];
 
 
