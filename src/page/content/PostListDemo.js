@@ -6,68 +6,43 @@ import {Hex} from 'react-hui';
 
 const TabPane = Tabs.TabPane;
 
-const data = [{
-    key: '11',
-    name: 'John Brown',
-    age: 32,
-    address: 'New York No. 1 Lake Park',
-}, {
-    key: '22',
-    name: 'Joe Black',
-    age: 42,
-    address: 'London No. 1 Lake Park',
-}, {
-    key: '33',
-    name: 'Jim Green',
-    age: 32,
-    address: 'Sidney No. 1 Lake Park',
-}, {
-    key: '44',
-    name: 'Jim Red',
-    age: 32,
-    address: 'London No. 2 Lake Park',
-}];
+const data = [];
 
 const columns = [{
-    title: 'Name',
-    dataIndex: 'name',
-    key: 'name',
-    render: text => <a href="#">{text}</a>,
+    title: 'Title',
+    dataIndex: 'title',
+    key: 'title',
+    // width: 600,
+    render: (text, record) => <h3><a target="_blank" href={record.link}>{text}</a></h3>
 }, {
-    title: 'Age',
-    dataIndex: 'age',
-    key: 'age',
+    title: 'ReplyCount/PageViewCount',
+    dataIndex: 'replyCount',
+    key: 'replyCount/pageViewCount',
+    render: (text, record) => <h3>{text} / {record.pageViewCount}</h3>
 }, {
-    title: 'Address',
-    dataIndex: 'address',
-    key: 'address',
+    title: 'LastReplyTime',
+    dataIndex: 'lastReplyTime',
+    key: 'lastReplyTime',
+    render: text => <h3>{PostListDemo.format(new Date(text), 'yyyy-MM-dd HH:mm')}</h3>
 }, {
-    title: 'Action',
-    key: 'action',
-    render: (text, record) => (
-        <span>
-      <a href="#">Action 一 {record.name}</a>
-      <span className="ant-divider" />
-      <a href="#">Delete</a>
-      <span className="ant-divider" />
-      <a href="#" className="ant-dropdown-link">
-        More actions
-      </a>
-    </span>
-    ),
+    title: 'PublishTime',
+    dataIndex: 'publishTime',
+    key: 'publishTime',
+    render: text => <h3>{PostListDemo.format(new Date(text), 'yyyy-MM-dd HH:mm')}</h3>
 }];
 
 class PostListDemo extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            curTopicSectionId : 1,
+            curTopicId : 1,
             curSortType : 1,
             data: [],
             pagination: {
                 current : 1,
-                pageSize : 20,
-                total:200
+                pageSize : 15,
+                total:200,
+                size: 'middle'
             },
             loading: false,
         };
@@ -75,75 +50,101 @@ class PostListDemo extends Component {
 
     componentDidMount() {
         console.log('componentDidMount');
-        this.loadPostList(this.state.curTopicSectionId, this.state.curSortType, this.state.pagination);
+        this.loadPostList(this.state.curTopicId, this.state.curSortType, this.state.pagination);
     }
 
     handlePageChange(pagination) {
         console.log('handlePageChange start, pagination=' + pagination);
         const pager = pagination;
-        // this.setState({
-        //     pagination: pager,
-        // });
-        this.loadPostList(this.state.curTopicSectionId, this.state.curSortType, pager);
+        this.loadPostList(this.state.curTopicId, this.state.curSortType, pagination);
         console.log('handlePageChange end');
     };
 
-    fetch(params = {}) {
-        console.log('params:', params);
-        this.setState({ loading: true });
-        // reqwest({
-        //     url: 'https://randomuser.me/api',
-        //     method: 'get',
-        //     data: {
-        //         results: 10,
-        //         ...params,
-        //     },
-        //     type: 'json',
-        // }).then((data) => {
-        //
-        // });
-        const pagination = this.state.pagination;
-        // Read total count from server
-        // pagination.total = data.totalCount;
-        pagination.total = 200;
-        this.setState({
-            loading: false,
-            data: data,
-            pagination : pagination
-        });
-    };
+    // fetch(params = {}) {
+    //     console.log('params:', params);
+    //     this.setState({ loading: true });
+    //     // reqwest({
+    //     //     url: 'https://randomuser.me/api',
+    //     //     method: 'get',
+    //     //     data: {
+    //     //         results: 10,
+    //     //         ...params,
+    //     //     },
+    //     //     type: 'json',
+    //     // }).then((data) => {
+    //     //
+    //     // });
+    //     const pagination = this.state.pagination;
+    //     // Read total count from server
+    //     // pagination.total = data.totalCount;
+    //     pagination.total = 200;
+    //     this.setState({
+    //         loading: false,
+    //         data: data,
+    //         pagination : pagination
+    //     });
+    // };
+
 
     handleTabChange(activeKey, type) {
         console.log('handleTabChange start: activeKey=' + activeKey + '&type=' + type);
-        let curTopicSectionId = this.state.curTopicSectionId;
+        let curTopicId = this.state.curTopicId;
         let curSortType = this.state.curSortType;
         if (type == 1) {
-            this.setState({curTopicSectionId : activeKey});
-            curTopicSectionId = activeKey;
+            this.setState({curTopicId : activeKey});
+            curTopicId = activeKey;
         }
         if (type == 2) {
             this.setState({curSortType : activeKey});
             curSortType = activeKey;
         }
-        this.loadPostList(curTopicSectionId, curSortType, this.state.pagination);
+        this.loadPostList(curTopicId, curSortType, this.state.pagination);
         console.log('handleTabChange end');
     }
 
-    loadPostList(curTopicSectionId, curSortType, pager) {
-        console.log('loadPostList start: curTopicSectionId=' + curTopicSectionId + '&curSortType=' + curSortType + '&pager=' + pager);
+    loadPostList(curTopicId, curSortType, pager) {
+        console.log('loadPostList start: curTopicId=' + curTopicId + '&curSortType=' + curSortType + '&pager=' + pager);
         this.setState({ loading: true });
-        const url = '/api/latest/joke/img?page=';
+        const url = '/api/hupu/list';
         const params = {
-            sectionId : curTopicSectionId,
+            topicId : curTopicId,
             sortType : curSortType,
-            pager: pager
+            current: pager.current,
+            pageSize: pager.pageSize,
+            total: pager.total
         };
-        // Hex.get(url, params ,data => {
-        //     console.log('result =' + data);
-        //     this.setState({data : data.data.postList, pagination : data.data.pager, loading: false});
-        // });
-        this.setState({data : data, pagination : pager, loading: false});
+        Hex.get(url, params ,data => {
+            // console.log('result =' + data.toSource());
+            if (data.code == 200) {
+                console.log('datadata' + data.data.dataList);
+                this.setState({data : data.data.dataList, pagination : data.data.pager, loading: false});
+            } else {
+                this.setState({pagination : pager, loading: false});
+            }
+        });
     }
+
+    static format(date, fmt) { //author: meizz
+        let o = {
+            'M+' : date.getMonth() + 1,                 //月份
+            'd+' : date.getDate(),                    //日
+            'H+' : date.getHours(),                   //小时
+            'm+' : date.getMinutes(),                 //分
+            's+' : date.getSeconds(),                 //秒
+            'q+' : Math.floor((date.getMonth() + 3) / 3), //季度
+            'S'  : date.getMilliseconds()             //毫秒
+        };
+        if(/(y+)/.test(fmt)) {
+            fmt = fmt.replace(RegExp.$1, (date.getFullYear() + '').substr(4 - RegExp.$1.length));
+        }
+        for(let k in o) {
+            if(new RegExp('(' + k + ')').test(fmt)) {
+                fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (('00' + o[k]).substr(('' + o[k]).length)));
+            }
+        }
+        return fmt;
+    }
+
 
     render() {
         return (
@@ -160,8 +161,9 @@ class PostListDemo extends Component {
             </Tabs>
             <div style={{background: 'white'}}>
                 <Table columns={columns}
-                       rowKey={record => record.key}
-                       dataSource={data}
+                       size='small'
+                       rowKey={record => record.articleId}
+                       dataSource={this.state.data}
                        pagination={this.state.pagination}
                        loading={this.state.loading}
                        onChange={this.handlePageChange.bind(this)}

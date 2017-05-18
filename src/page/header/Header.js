@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import {Layout, Menu, Icon } from 'antd';
 import { Link } from 'react-router';
+import './css/header.css';
 
 const { SubMenu } = Menu;
 const LayoutHeader = Layout.Header;
@@ -24,7 +25,7 @@ class Header extends Component {
 
     render() {
         return (
-                <LayoutHeader className="header">
+                <LayoutHeader id="header-menu" className="header">
                     <div className="logo" />
                     <Menu
                         theme="dark"
