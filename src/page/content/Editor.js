@@ -33,7 +33,7 @@ class Editor extends Component {
         this.receiveHtml = this.receiveHtml.bind(this);
     }
     receiveHtml(content) {
-        ;
+        console.log(content);
     }
     render() {
         const uploadConfig = {

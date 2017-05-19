@@ -8,6 +8,7 @@ import InfoList from './page/content/InfoList';
 import Editor from './page/content/Editor';
 import PostList from './page/content/PostList';
 import PaginationDemo from './page/content/PaginationDemo';
+import BlogEditForm from './page/content/BlogEditForm';
 
 ReactDOM.render((
     <Router history={hashHistory}>
@@ -19,6 +20,7 @@ ReactDOM.render((
             <Route path="/joke" component={InfoList}/>
             <Route path='/post' component={PostList}/>
             <Route path='/page/demo' component={PaginationDemo}/>
+            <Route path='/gajlgjaJLGJALlkjajljagajJRTRTQAgzjl' component={BlogEditForm}/>
         </Route>
     </Router>
 ), document.getElementById('container'));

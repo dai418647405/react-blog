@@ -24,8 +24,17 @@
 
 .card-container > .ant-tabs-card > .ant-tabs-bar .ant-tabs-tab {
     border-color: transparent;
+    margin-right: 2%;
+    width: 100px;
+    text-align: center;
 }
 
 .card-container > .ant-tabs-card > .ant-tabs-bar .ant-tabs-tab-active {
     border-color: #fff;
+}
+
+.ant-tabs-nav .ant-tabs-tab {
+    width: 120px;
+    text-align: center;
+    margin-right: 0;
 }

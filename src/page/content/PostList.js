@@ -7,26 +7,24 @@ import Util from '../../Util';
 
 const TabPane = Tabs.TabPane;
 
-const data = [];
-
 const columns = [{
-    title: 'Title',
+    title: <h3>主题</h3>,
     dataIndex: 'title',
     key: 'title',
     // width: 600,
     render: (text, record) => <h3><a target="_blank" href={record.link}>{text}</a></h3>
 }, {
-    title: 'ReplyCount/PageViewCount',
+    title: <h3>回复/浏览</h3>,
     dataIndex: 'replyCount',
     key: 'replyCount/pageViewCount',
     render: (text, record) => <h3>{text} / {record.pageViewCount}</h3>
 }, {
-    title: 'LastReplyTime',
+    title: <h3>最后回复时间</h3>,
     dataIndex: 'lastReplyTime',
     key: 'lastReplyTime',
     render: text => <h3>{Util.format(new Date(text), 'yyyy-MM-dd HH:mm')}</h3>
 }, {
-    title: 'PublishTime',
+    title: <h3>发表时间</h3>,
     dataIndex: 'publishTime',
     key: 'publishTime',
     render: text => <h3>{Util.format(new Date(text), 'yyyy-MM-dd HH:mm')}</h3>
@@ -66,12 +64,12 @@ class PostList extends Component {
         let curTopicId = this.state.curTopicId;
         let curSortType = this.state.curSortType;
         if (type == 1) {
-            this.setState({curTopicId : activeKey});
-            curTopicId = activeKey;
+            this.setState({curTopicId : activeKey.split('-')[1]});
+            curTopicId = activeKey.split('-')[1];
         }
         if (type == 2) {
-            this.setState({curSortType : activeKey});
-            curSortType = activeKey;
+            this.setState({curSortType : activeKey.split('-')[1]});
+            curSortType = activeKey.split('-')[1];
         }
         this.loadPostList(curTopicId, curSortType, this.state.pagination);
         console.log('handleTabChange end');
@@ -91,7 +89,7 @@ class PostList extends Component {
         Hex.get(url, params ,data => {
             // console.log('result =' + data.toSource());
             if (data.code == 200) {
-                console.log('datadata' + data.data.dataList);
+                console.log('data from server' + data.data.dataList);
                 this.setState({data : data.data.dataList, pagination : data.data.pager, loading: false});
             } else {
                 this.setState({pagination : pager, loading: false});
@@ -102,15 +100,18 @@ class PostList extends Component {
     render() {
         return (
         <div className="card-container">
-            <Tabs type="card" defaultActiveKey="1" onChange={(activeKey) => this.handleTabChange(activeKey, 1)}>
-                <TabPane tab="话题类型 a" key="1" />
-                <TabPane tab="话题类型 b" key="2" />
-                <TabPane tab="话题类型 c" key="3" />
+            <Tabs type="card" defaultActiveKey="topic-1" onChange={(activeKey) => this.handleTabChange(activeKey, 1)}>
+                <TabPane tab="湿乎乎" key="topic-1" />
+                <TabPane tab="步行街" key="topic-2" />
+                <TabPane tab="电影" key="topic-3" />
             </Tabs>
-            <Tabs defaultActiveKey="101" className="sort_card_bar" onChange={(activeKey) => this.handleTabChange(activeKey, 2)}>
-                <TabPane tab="排序方式 1" key="101" />
-                <TabPane tab="排序方式 2" key="102" />
-                <TabPane tab="排序方式 3" key="103" />
+            <Tabs defaultActiveKey="sortType-3" className="sort_card_bar" onChange={(activeKey) => this.handleTabChange(activeKey, 2)}>
+                <TabPane tab="今日最热" key="sortType-3" />
+                <TabPane tab="过去三天最热" key="sortType-4" />
+                <TabPane tab="最新发表" key="sortType-2" />
+                <TabPane tab="最新回复" key="sortType-1" />
+                <TabPane tab="过去七天最热" key="sortType-5" />
+                <TabPane tab="历史最热" key="sortType-6" />
             </Tabs>
             <div style={{background: 'white'}}>
                 <Table columns={columns}
