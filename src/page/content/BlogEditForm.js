@@ -42,7 +42,7 @@ class BlogEditorForm extends Component {
         const url = '/api/blog/type/list';
         const params = {};
         Hex.get(url, params ,res => {
-            console.log('loadTypeList result =' + res.toString());
+            // console.log('loadTypeList result =' + res.toSource());
             if (res.code == 200) {
                 // this.setState({typeList : res.data});
                 typeList = res.data;

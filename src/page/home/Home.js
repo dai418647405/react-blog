@@ -1,34 +1,66 @@
 import React, { Component, PropTypes } from 'react';
 import { Layout, Menu, Breadcrumb, Icon } from 'antd';
 import { Link } from 'react-router';
+import {Hex} from 'react-hui';
+
 const { SubMenu } = Menu;
 const { Content, Sider } = Layout;
 
-const menu1 = {
-    menuInfo:{title:'Java', icon:'user'},
-    menuItems:[
-        {name: 'java_1', path: '/home/blog/1'},
-        {name: 'java_2', path: '/home/blog/2'},
-        {name: 'java_3', path: 'home1' },
-        {name: 'java_4', path: 'home2'},
-        {name: 'java_5', path: 'home3'},
-        {name: 'java_6', path: 'home4'},
-        {name: 'java_7', path: 'home5'},
-        {name: 'java_8', path: 'home6'}
-    ]
-};
 
+let type2TitleListVar = [];
 class Home extends Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {type2TitleList : []};
+    }
+
+    componentWillMount() {
+        console.log('start componentWillMount');
+        this.loadTypeList();
+    }
+
+    loadTypeList() {
+        console.log('start loadTypeList');
+        let typeList = [];
+        const url = '/api/blog/type/list';
+        Hex.get(url, {} ,res => {
+            console.log('loadTypeList result =' + res.toString());
+            if (res.code == 200) {
+                // this.setState({typeList : res.data});
+                typeList = res.data;
+                typeList.map(item => {
+                    type2TitleListVar[item.typeId] = {typeName : item.typeName, blogList : []};
+                    }
+                );
+                console.log(type2TitleListVar.toString());
+                this.setState({type2TitleList : type2TitleListVar});
+                this.loadTitleList();
+            }
+        });
+        console.log('end loadTypeList');
+    }
+
+    loadTitleList() {
+        console.log('start loadTitleList');
+        let titleList = [];
+        const url = '/api/blog/title/list';
+        const params = {};
+        Hex.get(url, params ,res => {
+            console.log('loadTitleList result =' + res.toString());
+            if (res.code == 200) {
+                titleList = res.data;
+                titleList.map(item => {
+                    type2TitleListVar[item.type].blogList.push({blogId: item.blogId, blogTitle: item.title});
+                    }
+                );
+                this.setState({type2TitleList : type2TitleListVar});
+            }
+            console.log(type2TitleListVar.toString());
+        });
+        console.log('end loadTitleList');
     }
 
     render() {
-
-        const menuInfo1 = this.props.menu1.menuInfo;
-        const menuItems1 = this.props.menu1.menuItems;
-
         return (
             <Content style={{ padding: '0 50px' }}>
                 <Breadcrumb style={{ margin: '12px 0' }}>
@@ -38,43 +70,20 @@ class Home extends Component {
                 </Breadcrumb>
                 <Layout style={{ padding: '24px 0', background: '#fff' }}>
                     <Sider width={200} style={{ background: '#fff' }}>
-                        <Menu
-                            mode="inline"
-                            defaultSelectedKeys={['1']}
-                            defaultOpenKeys={['sub1']}
-                            style={{ height: '100%' }}
-                        >
-                            <SubMenu key="sub1" title={<span><Icon type="user" />subnav 1</span>}>
-                                <Menu.Item key="1"><Link to='/home/editor'>option1</Link></Menu.Item>
-                                <Menu.Item key="2">option2</Menu.Item>
-                                <Menu.Item key="3">option3</Menu.Item>
-                                <Menu.Item key="4">option4</Menu.Item>
-                            </SubMenu>
-                            <SubMenu key="sub2" title={<span><Icon type="laptop" />subnav 2</span>}>
-                                <Menu.Item key="5">option5</Menu.Item>
-                                <Menu.Item key="6">option6</Menu.Item>
-                                <Menu.Item key="7">option7</Menu.Item>
-                                <Menu.Item key="8">option8</Menu.Item>
-                            </SubMenu>
-                            <SubMenu key="sub3" title={<span><Icon type="notification" />subnav 3</span>}>
-                                <Menu.Item key="9">option9</Menu.Item>
-                                <Menu.Item key="10">option10</Menu.Item>
-                                <Menu.Item key="11">option11</Menu.Item>
-                                <Menu.Item key="12">option12</Menu.Item>
-                            </SubMenu>
-                            <SubMenu key={menuInfo1.title} title={<span><Icon type={menuInfo1.icon} />{menuInfo1.title}</span>}>
-                                {menuItems1.map(item => {
-                                    return (
-                                        <Menu.Item key={item.path}>
-                                            <Link to={item.path}>{item.name}</Link>
-                                        </Menu.Item>);
-                                    })
-                                }
-                            </SubMenu>
+                        <Menu mode="inline" style={{ height: '100%' }}>
+                            {this.state.type2TitleList.map((item, index) => {
+                                return (<SubMenu key={'subMenu-' + index} title={<span><Icon type="user" />{item.typeName}</span>}>
+                                    {item.blogList.map((item) => {
+                                        return (<Menu.Item key={'blog-' + item.blogId}><Link to={'/home/blog/' + item.blogId}>{item.blogTitle}</Link></Menu.Item>);
+                                    })}
+                                        </SubMenu>);
+                                        })
+                            }
                         </Menu>
                     </Sider>
-                    {this.props.children}
+                    {this.props.children || (<Content style={{ padding: '0 24px', minHeight: 200}}><div><h3>我的靴子里有条蛇～</h3></div></Content>)}
                 </Layout>
+                {console.log('render render render')}
             </Content>
         );
     }
@@ -83,7 +92,6 @@ class Home extends Component {
 Home.propTypes = {};
 
 Home.defaultProps = {
-    menu1
 };
 
 export default Home;
