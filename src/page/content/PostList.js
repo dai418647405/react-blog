@@ -63,6 +63,8 @@ class PostList extends Component {
         console.log('handleTabChange start: activeKey=' + activeKey + '&type=' + type);
         let curTopicId = this.state.curTopicId;
         let curSortType = this.state.curSortType;
+        let pager = this.state.pagination;
+        pager.current = 1;
         if (type == 1) {
             this.setState({curTopicId : activeKey.split('-')[1]});
             curTopicId = activeKey.split('-')[1];
@@ -71,7 +73,7 @@ class PostList extends Component {
             this.setState({curSortType : activeKey.split('-')[1]});
             curSortType = activeKey.split('-')[1];
         }
-        this.loadPostList(curTopicId, curSortType, this.state.pagination);
+        this.loadPostList(curTopicId, curSortType, pager);
         console.log('handleTabChange end');
     }
 
@@ -103,7 +105,10 @@ class PostList extends Component {
             <Tabs type="card" defaultActiveKey="topic-1" onChange={(activeKey) => this.handleTabChange(activeKey, 1)}>
                 <TabPane tab="湿乎乎" key="topic-1" />
                 <TabPane tab="步行街" key="topic-2" />
-                <TabPane tab="电影" key="topic-3" />
+                <TabPane tab="足球区" key="topic-3" />
+                <TabPane tab="影视区" key="topic-4" />
+                <TabPane tab="电竞区" key="topic-5" />
+                <TabPane tab="ACG区" key="topic-6" />
             </Tabs>
             <Tabs defaultActiveKey="sortType-3" className="sort_card_bar" onChange={(activeKey) => this.handleTabChange(activeKey, 2)}>
                 <TabPane tab="今日最热" key="sortType-3" />

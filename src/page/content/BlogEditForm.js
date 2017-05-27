@@ -81,6 +81,7 @@ class BlogEditorForm extends Component {
     handleSubmit(e) {
         console.log('start handleSubmit');
         e.preventDefault();
+        this.props.form.validateFieldsAndScroll();
 
         const allFieldsValue = this.props.form.getFieldsValue();
         // console.log('all fields value = ' + allFieldsValue.toSource());
@@ -104,7 +105,7 @@ class BlogEditorForm extends Component {
                 this.loadTitleList();
                 this.props.form.setFieldsValue({'blogId': blogId.toString()});
             } else {
-                console.log('提交失败');
+                message.error('提交失败');
             }
         });
         console.log('end handleSubmit');
@@ -135,7 +136,7 @@ class BlogEditorForm extends Component {
                     </Col>
                     <Col span="5">
                         <FormItem>
-                            {getFieldDecorator('title', {rules: [{required: true}], initialValue: ''}) (
+                            {getFieldDecorator('title', {rules: [{required: true, message: '标题不能为空'}], initialValue: ''}) (
                                 <Input placeholder="标题input"/>
                             )}
                         </FormItem>
@@ -149,7 +150,7 @@ class BlogEditorForm extends Component {
                     </Col>
                     <Col span="3" offset={1}>
                         <FormItem>
-                            {getFieldDecorator('type', {rules: [{required: true}], initialValue: ''}) (
+                            {getFieldDecorator('type', {rules: [{required: true, message: '类型不能为空'}], initialValue: ''}) (
                                 <Select>
                                     {(typeList || []).map(
                                         item => <Option value={item.typeId + ''} key={'type-' + item.typeId}>{item.typeName}</Option>
@@ -168,14 +169,14 @@ class BlogEditorForm extends Component {
                 </FormItem>
                 <FormItem>
                     <Col span="7" offset={1}>
-                        {getFieldDecorator('token', {rules: [{required: true}], initialValue: ''}) (
+                        {getFieldDecorator('token', {rules: [{required: true, message: 'token不能为空'}], initialValue: ''}) (
                             <Input placeholder="Token" />
                         )}
                     </Col>
                 </FormItem>
                 <FormItem>
                     <Col span="18" offset={1}>
-                        {getFieldDecorator('htmlContent', {rules: [{required: true}], initialValue: ''}) (
+                        {getFieldDecorator('htmlContent', {rules: [{required: true, message: '内容不能为空'}], initialValue: ''}) (
                             <Input type="textarea" rows={20}/>
                         )}
                     </Col>
