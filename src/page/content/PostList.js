@@ -35,7 +35,7 @@ class PostList extends Component {
         super(props);
         this.state = {
             curTopicId : 1,
-            curSortType : 1,
+            curSortType : 3,
             data: [],
             pagination: {
                 current : 1,
