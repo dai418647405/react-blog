@@ -2,7 +2,7 @@ import { Table, Button } from 'antd';
 import React, {Component, PropTypes} from 'react';
 import { Tabs, Switch} from 'antd';
 import './css/postlist.css';
-import {Hex} from 'react-hui';
+import Req from '../../Req';
 import Util from '../../Util';
 
 const TabPane = Tabs.TabPane;
@@ -88,7 +88,7 @@ class PostList extends Component {
             pageSize: pager.pageSize,
             total: pager.total
         };
-        Hex.get(url, params ,data => {
+        Req.get(url, params ,data => {
             // console.log('result =' + data.toSource());
             if (data.code == 200) {
                 console.log('data from server' + data.data.dataList);

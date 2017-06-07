@@ -6,11 +6,13 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var ROOT_PATH = path.resolve(__dirname);
 var SRC_PATH = path.resolve(ROOT_PATH, 'src');
 var DIST_PATH = path.resolve(ROOT_PATH, 'dist');
+var webpack = require('webpack');
 
 module.exports = {
     // 项目入口. 可以直接用文件夹名称, 默认会找 index.js; 也可以确定是哪个文件名字
     entry: {
-        app: './src/app.js'
+        app: './src/app.js',
+        vendor: ['react']
     },
     // 项目出口. 让 webpack 把处理完成的文件放在哪里
     output: {
@@ -28,8 +30,7 @@ module.exports = {
         loaders: [{
             test: /\.js$/,
             include: [
-                path.resolve(ROOT_PATH, 'src'),
-                path.resolve(ROOT_PATH, 'node_modules/react-hui')
+                path.resolve(ROOT_PATH, 'src')
             ],
             loader: 'babel',
             query: {
@@ -42,8 +43,7 @@ module.exports = {
         }, {
             test: /\.less$/,
             include: [
-                path.resolve(ROOT_PATH, 'src'),
-                path.resolve(ROOT_PATH, 'node_modules/react-hui')
+                path.resolve(ROOT_PATH, 'src')
             ],
             loader: ExtractTextPlugin.extract('style-loader', 'css-loader?sourceMap!postcss-loader!less-loader?sourceMap')
         }, {
@@ -80,6 +80,7 @@ module.exports = {
             template: 'index.html',
             chunks: ['app'],
             title: 'Hello World app'
-        })
+        }),
+        new webpack.optimize.CommonsChunkPlugin('vendor',  'vendor.js')
     ]
 };

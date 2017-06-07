@@ -3,7 +3,7 @@ import { message, Alert, Row, Form, Icon, Button, Input, Col, Select, InputNumbe
 const InputGroup = Input.Group;
 const Option = Select.Option;
 const FormItem = Form.Item;
-import {Hex} from 'react-hui';
+import Req from '../../Req';
 
 let typeList = [];
 class BlogEditorForm extends Component {
@@ -28,7 +28,7 @@ class BlogEditorForm extends Component {
         console.log('start loadTitleList');
         const url = '/api/blog/title/list';
         const params = {};
-        Hex.get(url, params ,res => {
+        Req.get(url, params ,res => {
             console.log('loadTitleList result =' + res.toString());
             if (res.code == 200) {
                 this.setState({titleList : res.data});
@@ -41,7 +41,7 @@ class BlogEditorForm extends Component {
         console.log('start loadTypeList');
         const url = '/api/blog/type/list';
         const params = {};
-        Hex.get(url, params ,res => {
+        Req.get(url, params ,res => {
             // console.log('loadTypeList result =' + res.toSource());
             if (res.code == 200) {
                 // this.setState({typeList : res.data});
@@ -67,7 +67,7 @@ class BlogEditorForm extends Component {
         console.log('start loadBlogById blogId=' + blogId);
         const url = '/api/blog/get/' + blogId;
         const params = {};
-        Hex.get(url, params ,res => {
+        Req.get(url, params ,res => {
             console.log('loadBlogById result =' + res.toString());
             if (res.code == 200) {
                 const blog = res.data;
@@ -96,7 +96,7 @@ class BlogEditorForm extends Component {
             publishTime: allFieldsValue.publishTime
         };
         const url = '/api/blog/add/' + allFieldsValue.token;
-        Hex.put(url, params, res => {
+        Req.put(url, params, res => {
             console.log('submit result =' + res.toString());
             const blogId = res.data;
             if (res.code == 200 && blogId != -1) {

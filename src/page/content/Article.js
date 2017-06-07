@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { Layout } from 'antd';
 const { Content } = Layout;
-import {Hex} from 'react-hui';
+import Req from '../../Req';
 
 class Article extends Component {
     constructor(props) {
@@ -18,7 +18,7 @@ class Article extends Component {
         console.log('start loadBlogById blogId=' + blogId);
         const url = '/api/blog/get/' + blogId;
         const params = {};
-        Hex.get(url, params ,res => {
+        Req.get(url, params ,res => {
             console.log('loadBlogById result =' + res.toString());
             if (res.code == 200) {
                 const blog = res.data;

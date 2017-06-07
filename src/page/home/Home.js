@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { Layout, Menu, Breadcrumb, Icon } from 'antd';
 import { Link } from 'react-router';
-import {Hex} from 'react-hui';
+import Req from '../../Req';
 
 const { SubMenu } = Menu;
 const { Content, Sider } = Layout;
@@ -23,7 +23,7 @@ class Home extends Component {
         console.log('start loadTypeList');
         let typeList = [];
         const url = '/api/blog/type/list';
-        Hex.get(url, {} ,res => {
+        Req.get(url, {} ,res => {
             console.log('loadTypeList result =' + res.toString());
             if (res.code == 200) {
                 // this.setState({typeList : res.data});
@@ -45,7 +45,7 @@ class Home extends Component {
         let titleList = [];
         const url = '/api/blog/title/list';
         const params = {};
-        Hex.get(url, params ,res => {
+        Req.get(url, params ,res => {
             console.log('loadTitleList result =' + res.toString());
             if (res.code == 200) {
                 titleList = res.data;
@@ -72,7 +72,7 @@ class Home extends Component {
                     <Sider width={200} style={{ background: '#fff' }}>
                         <Menu mode="inline" style={{ height: '100%' }}>
                             {this.state.type2TitleList.map((item, index) => {
-                                return (<SubMenu key={'subMenu-' + index} title={<span><Icon type="user" />{item.typeName}</span>}>
+                                return (<SubMenu key={'subMenu-' + index} title={<span><Icon type="book" />{item.typeName}</span>}>
                                     {item.blogList.map((item) => {
                                         return (<Menu.Item key={'blog-' + item.blogId}><Link to={'/home/blog/' + item.blogId}>{item.blogTitle}</Link></Menu.Item>);
                                     })}

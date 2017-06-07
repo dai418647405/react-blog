@@ -1,7 +1,7 @@
 import React, {Component, PropTypes} from 'react';
-import {Hex} from 'react-hui';
 import JokeCard from './JokeCard';
 import { Button } from 'antd';
+import Req from '../../Req';
 
 let page = 1;
 
@@ -35,7 +35,7 @@ class InfoList extends Component {
     loadDataFromServer(page) {
         this.setState({ iconLoading: true });
         const url = '/api/latest/joke/img?page=' + page + '&rows=20';
-        Hex.get(url, data => {
+        Req.get(url, data => {
             console.log(data);
             this.setState({jokeList : data.data.result, iconLoading: false});
         });
