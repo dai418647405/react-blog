@@ -15,30 +15,30 @@ class BlogEditorForm extends Component {
     }
 
     componentWillMount() {
-        console.log('start componentWillMount');
+        // console.log('start componentWillMount');
         this.loadTitleList();
         this.loadTypeList();
     }
 
     componentDidMount() {
-        console.log('start componentDidMount');
+        // console.log('start componentDidMount');
     }
 
     loadTitleList() {
-        console.log('start loadTitleList');
+        // console.log('start loadTitleList');
         const url = '/api/blog/title/list';
         const params = {};
         Req.get(url, params ,res => {
-            console.log('loadTitleList result =' + res.toString());
+            // console.log('loadTitleList result =' + res.toString());
             if (res.code == 200) {
                 this.setState({titleList : res.data});
             }
         });
-        console.log('end loadTitleList');
+        // console.log('end loadTitleList');
     }
 
     loadTypeList() {
-        console.log('start loadTypeList');
+        // console.log('start loadTypeList');
         const url = '/api/blog/type/list';
         const params = {};
         Req.get(url, params ,res => {
@@ -48,11 +48,11 @@ class BlogEditorForm extends Component {
                 typeList = res.data;
             }
         });
-        console.log('end loadTypeList');
+        // console.log('end loadTypeList');
     }
 
     handleSelectChange(value) {
-        console.log('start handleSelectChange value=' + value);
+        // console.log('start handleSelectChange value=' + value);
         //如果不是编辑新文章
         if (value != 0) {
             this.loadBlogById(value);
@@ -60,26 +60,26 @@ class BlogEditorForm extends Component {
             this.props.form.setFieldsValue({'blogId': '0', 'title': '', 'htmlContent': ''
                 , 'author': '', 'seq': '', 'type': ''});
         }
-        console.log('end handleSelectChange value=' + value);
+        // console.log('end handleSelectChange value=' + value);
     }
 
     loadBlogById(blogId) {
-        console.log('start loadBlogById blogId=' + blogId);
+        // console.log('start loadBlogById blogId=' + blogId);
         const url = '/api/blog/get/' + blogId;
         const params = {};
         Req.get(url, params ,res => {
-            console.log('loadBlogById result =' + res.toString());
+            // console.log('loadBlogById result =' + res.toString());
             if (res.code == 200) {
                 const blog = res.data;
                 this.props.form.setFieldsValue({'blogId': blog.blogId.toString(), 'title': blog.title, 'htmlContent': blog.htmlContent
                     , 'author': blog.author, 'seq': blog.seq, 'type': blog.type.toString()});
             }
         });
-        console.log('end loadBlogById blogId=' + blogId);
+        // console.log('end loadBlogById blogId=' + blogId);
     }
 
     handleSubmit(e) {
-        console.log('start handleSubmit');
+        // console.log('start handleSubmit');
         e.preventDefault();
         this.props.form.validateFieldsAndScroll();
 
@@ -97,7 +97,7 @@ class BlogEditorForm extends Component {
         };
         const url = '/api/blog/add/' + allFieldsValue.token;
         Req.put(url, params, res => {
-            console.log('submit result =' + res.toString());
+            // console.log('submit result =' + res.toString());
             const blogId = res.data;
             if (res.code == 200 && blogId != -1) {
                 // console.log('data from server' + res.data);
@@ -108,7 +108,7 @@ class BlogEditorForm extends Component {
                 message.error('提交失败');
             }
         });
-        console.log('end handleSubmit');
+        // console.log('end handleSubmit');
     }
 
     render() {
@@ -187,7 +187,7 @@ class BlogEditorForm extends Component {
                     </Col>
                 </FormItem>
             </Form>
-                {console.log('render render render')}
+                {/*{console.log('render render render')}*/}
             </div>
         );
     }

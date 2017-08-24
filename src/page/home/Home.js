@@ -15,16 +15,16 @@ class Home extends Component {
     }
 
     componentWillMount() {
-        console.log('start componentWillMount');
+        // console.log('start componentWillMount');
         this.loadTypeList();
     }
 
     loadTypeList() {
-        console.log('start loadTypeList');
+        // console.log('start loadTypeList');
         let typeList = [];
         const url = '/api/blog/type/list';
         Req.get(url, {} ,res => {
-            console.log('loadTypeList result =' + res.toString());
+            // console.log('loadTypeList result =' + res.toString());
             if (res.code == 200) {
                 // this.setState({typeList : res.data});
                 typeList = res.data;
@@ -32,21 +32,21 @@ class Home extends Component {
                     type2TitleListVar[item.typeId] = {typeName : item.typeName, blogList : []};
                     }
                 );
-                console.log(type2TitleListVar.toString());
+                // console.log(type2TitleListVar.toString());
                 this.setState({type2TitleList : type2TitleListVar});
                 this.loadTitleList();
             }
         });
-        console.log('end loadTypeList');
+        // console.log('end loadTypeList');
     }
 
     loadTitleList() {
-        console.log('start loadTitleList');
+        // console.log('start loadTitleList');
         let titleList = [];
         const url = '/api/blog/title/list';
         const params = {};
         Req.get(url, params ,res => {
-            console.log('loadTitleList result =' + res.toString());
+            // console.log('loadTitleList result =' + res.toString());
             if (res.code == 200) {
                 titleList = res.data;
                 titleList.map(item => {
@@ -55,9 +55,16 @@ class Home extends Component {
                 );
                 this.setState({type2TitleList : type2TitleListVar});
             }
-            console.log(type2TitleListVar.toString());
+            // console.log(type2TitleListVar.toString());
         });
-        console.log('end loadTitleList');
+        // console.log('end loadTitleList');
+    }
+
+    componentDidMount() {
+        let script = document.createElement('script');
+        script.src = '/src/page/plugin/canvas-nest.js';
+        script.type = 'text/javascript';
+        document.getElementById('panel_blank').appendChild(script);
     }
 
     render() {
@@ -81,9 +88,9 @@ class Home extends Component {
                             }
                         </Menu>
                     </Sider>
-                    {this.props.children || (<Content style={{ padding: '0 24px', minHeight: 200}}><div><h3>我的靴子里有条蛇～</h3></div></Content>)}
+                    {this.props.children || (<Content id='panel_blank' style={{ padding: '0 24px', minHeight: 200}}><div><h3>我的靴子里有条蛇～</h3></div></Content>)}
                 </Layout>
-                {console.log('render render render')}
+                {/*{console.log('render render render')}*/}
             </Content>
         );
     }

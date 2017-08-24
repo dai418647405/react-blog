@@ -48,19 +48,19 @@ class PostList extends Component {
     }
 
     componentDidMount() {
-        console.log('componentDidMount');
+        // console.log('componentDidMount');
         this.loadPostList(this.state.curTopicId, this.state.curSortType, this.state.pagination);
     }
 
     handlePageChange(pagination) {
-        console.log('handlePageChange start, pagination=' + pagination);
+        // console.log('handlePageChange start, pagination=' + pagination);
         const pager = pagination;
         this.loadPostList(this.state.curTopicId, this.state.curSortType, pagination);
-        console.log('handlePageChange end');
+        // console.log('handlePageChange end');
     };
 
     handleTabChange(activeKey, type) {
-        console.log('handleTabChange start: activeKey=' + activeKey + '&type=' + type);
+        // console.log('handleTabChange start: activeKey=' + activeKey + '&type=' + type);
         let curTopicId = this.state.curTopicId;
         let curSortType = this.state.curSortType;
         let pager = this.state.pagination;
@@ -74,11 +74,11 @@ class PostList extends Component {
             curSortType = activeKey.split('-')[1];
         }
         this.loadPostList(curTopicId, curSortType, pager);
-        console.log('handleTabChange end');
+        // console.log('handleTabChange end');
     }
 
     loadPostList(curTopicId, curSortType, pager) {
-        console.log('loadPostList start: curTopicId=' + curTopicId + '&curSortType=' + curSortType + '&pager=' + pager);
+        // console.log('loadPostList start: curTopicId=' + curTopicId + '&curSortType=' + curSortType + '&pager=' + pager);
         this.setState({ loading: true });
         const url = '/api/hupu/list';
         const params = {
@@ -91,7 +91,7 @@ class PostList extends Component {
         Req.get(url, params ,data => {
             // console.log('result =' + data.toSource());
             if (data.code == 200) {
-                console.log('data from server' + data.data.dataList);
+                // console.log('data from server' + data.data.dataList);
                 this.setState({data : data.data.dataList, pagination : data.data.pager, loading: false});
             } else {
                 this.setState({pagination : pager, loading: false});
@@ -128,7 +128,7 @@ class PostList extends Component {
                        onChange={this.handlePageChange.bind(this)}
                 />
             </div>
-            {console.log('render pagination:' + this.state.pagination)}
+            {/*{console.log('render pagination:' + this.state.pagination)}*/}
         </div>
         );
     }

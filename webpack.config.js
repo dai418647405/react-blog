@@ -81,6 +81,6 @@ module.exports = {
             chunks: ['app'],
             title: 'Hello World app'
         }),
-        new webpack.optimize.CommonsChunkPlugin('vendor',  'vendor.js')
+        // new webpack.optimize.CommonsChunkPlugin('vendor',  'vendor.js')
     ]
 };

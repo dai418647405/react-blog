@@ -36,7 +36,7 @@ class InfoList extends Component {
         this.setState({ iconLoading: true });
         const url = '/api/latest/joke/img?page=' + page + '&rows=20';
         Req.get(url, data => {
-            console.log(data);
+            // console.log(data);
             this.setState({jokeList : data.data.result, iconLoading: false});
         });
     }
